@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 50),
                 RaisedButton(
                   child: Text(
-                      'Schedule notification to appear in 5 seconds, custom sound, red colour, large icon, red LED'),
+                      'Schedule notification to appear in 5 seconds, red colour, red LED'),
                   onPressed: () async {
                     await _scheduleNotification();
                   },
