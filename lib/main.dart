@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:simple_notification/home_page.dart';
-import 'package:simple_notification/received_notification.dart';
+import 'package:simple_notification/ui/home_page.dart';
+import 'package:simple_notification/model/received_notification.dart';
 
 import 'package:rxdart/subjects.dart';
 
