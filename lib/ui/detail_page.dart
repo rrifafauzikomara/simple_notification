@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-
-class Arguments {
-  final String payload;
-
-  Arguments(this.payload);
-}
+import 'package:simple_notification/utils/bundle_data.dart';
 
 class DetailPage extends StatelessWidget {
   static const routeName = '/detail_page';
 
   @override
   Widget build(BuildContext context) {
-    final Arguments arg = ModalRoute.of(context).settings.arguments;
+    final BundleData arg = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text(arg.payload),
+        title: Text('Title: ${arg.payload}'),
       ),
       body: Center(
         child: RaisedButton(

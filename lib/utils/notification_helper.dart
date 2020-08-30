@@ -2,13 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:simple_notification/model/received_notification.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:simple_notification/utils/bundle_data.dart';
 
-final selectNotificationSubject = BehaviorSubject<String>();
 // Streams are created so that app can respond to notification-related events since the plugin is initialised in the `main` function
-final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
-    BehaviorSubject<ReceivedNotification>();
+final selectNotificationSubject = BehaviorSubject<String>();
 
 class NotificationHelper {
   static Future<void> initNotifications(
@@ -19,14 +17,10 @@ class NotificationHelper {
     // Note: permissions aren't requested here just to demonstrate that can be done later using the `requestPermissions()` method
     // of the `IOSFlutterLocalNotificationsPlugin` class
     var initializationSettingsIOS = IOSInitializationSettings(
-        requestAlertPermission: false,
-        requestBadgePermission: false,
-        requestSoundPermission: false,
-        onDidReceiveLocalNotification:
-            (int id, String title, String body, String payload) async {
-          didReceiveLocalNotificationSubject.add(ReceivedNotification(
-              id: id, title: title, body: body, payload: payload));
-        });
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+    );
 
     var initializationSettings = InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
@@ -101,5 +95,13 @@ class NotificationHelper {
       platformChannelSpecifics,
       payload: 'scheduled notification',
     );
+  }
+
+  // Click handling on notification
+  static void configureSelectNotificationSubject(
+      BuildContext context, String route) {
+    selectNotificationSubject.stream.listen((String payload) async {
+      await Navigator.pushNamed(context, route, arguments: BundleData(payload));
+    });
   }
 }
