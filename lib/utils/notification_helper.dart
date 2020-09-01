@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -58,9 +59,11 @@ class NotificationHelper {
 
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-        0, 'plain title', 'plain body', platformChannelSpecifics,
-        payload: 'plain notification');
+    await Future.delayed(Duration(seconds: 5), () async {
+      await flutterLocalNotificationsPlugin.show(
+          0, 'plain title', 'plain body', platformChannelSpecifics,
+          payload: 'plain notification');
+    });
   }
 
   // Schedules a notification
