@@ -15,11 +15,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     NotificationHelper.configureSelectNotificationSubject(
         context, DetailPage.routeName);
+    NotificationHelper.configureDidReceiveLocalNotificationSubject(
+        context, DetailPage.routeName);
   }
 
   @override
   void dispose() {
     selectNotificationSubject.close();
+    didReceiveLocalNotificationSubject.close();
     super.dispose();
   }
 

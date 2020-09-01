@@ -1,13 +1,16 @@
-import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:simple_notification/utils/bundle_data.dart';
+import 'package:simple_notification/utils/received_notification.dart';
+
+final selectNotificationSubject = BehaviorSubject<String>();
 
 // Streams are created so that app can respond to notification-related events since the plugin is initialised in the `main` function
-final selectNotificationSubject = BehaviorSubject<String>();
+final didReceiveLocalNotificationSubject =
+    BehaviorSubject<ReceivedNotification>();
 
 class NotificationHelper {
   static Future<void> initNotifications(
@@ -18,10 +21,14 @@ class NotificationHelper {
     // Note: permissions aren't requested here just to demonstrate that can be done later using the `requestPermissions()` method
     // of the `IOSFlutterLocalNotificationsPlugin` class
     var initializationSettingsIOS = IOSInitializationSettings(
-      requestAlertPermission: false,
-      requestBadgePermission: false,
-      requestSoundPermission: false,
-    );
+        requestAlertPermission: false,
+        requestBadgePermission: false,
+        requestSoundPermission: false,
+        onDidReceiveLocalNotification:
+            (int id, String title, String body, String payload) async {
+          didReceiveLocalNotificationSubject.add(ReceivedNotification(
+              id: id, title: title, body: body, payload: payload));
+        });
 
     var initializationSettings = InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
@@ -104,7 +111,48 @@ class NotificationHelper {
   static void configureSelectNotificationSubject(
       BuildContext context, String route) {
     selectNotificationSubject.stream.listen((String payload) async {
-      await Navigator.pushNamed(context, route, arguments: BundleData(payload));
+      await Navigator.pushNamed(context, route,
+          arguments: ReceivedNotification(payload: payload));
+    });
+  }
+
+  // Handling notifications whilst the app is in the foreground
+  // By design, iOS applications do not display notifications the app is in the
+  // foreground.
+  //
+  // For iOS 10+, use the presentation options to control the behaviour for when
+  // a notification is triggered while the app is in the foreground.
+  //
+  // For older versions of iOS, you need to handle the callback as part of specifying
+  // the method that should be fired to the onDidReceiveLocalNotification argument
+  // when creating an instance IOSInitializationSettings object that is passed to
+  // the function for initializing the plugin.
+  static void configureDidReceiveLocalNotificationSubject(
+      BuildContext context, String route) {
+    didReceiveLocalNotificationSubject.stream
+        .listen((ReceivedNotification receivedNotification) async {
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: receivedNotification.title != null
+              ? Text(receivedNotification.title)
+              : null,
+          content: receivedNotification.body != null
+              ? Text(receivedNotification.body)
+              : null,
+          actions: [
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              child: Text('Ok'),
+              onPressed: () async {
+                Navigator.of(context, rootNavigator: true).pop();
+                await Navigator.pushNamed(context, route,
+                    arguments: receivedNotification);
+              },
+            )
+          ],
+        ),
+      );
     });
   }
 }
