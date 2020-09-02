@@ -7,8 +7,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:simple_notification/utils/received_notification.dart';
 
 final selectNotificationSubject = BehaviorSubject<String>();
-
-// Streams are created so that app can respond to notification-related events since the plugin is initialised in the `main` function
 final didReceiveLocalNotificationSubject =
     BehaviorSubject<ReceivedNotification>();
 
@@ -18,8 +16,6 @@ class NotificationHelper {
     var initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
 
-    // Note: permissions aren't requested here just to demonstrate that can be done later using the `requestPermissions()` method
-    // of the `IOSFlutterLocalNotificationsPlugin` class
     var initializationSettingsIOS = IOSInitializationSettings(
         requestAlertPermission: false,
         requestBadgePermission: false,
@@ -42,7 +38,6 @@ class NotificationHelper {
     });
   }
 
-  // Permission iOS
   static void requestIOSPermissions(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) {
     flutterLocalNotificationsPlugin
@@ -55,7 +50,6 @@ class NotificationHelper {
         );
   }
 
-  // Show notification
   static Future<void> showNotification(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
@@ -71,7 +65,6 @@ class NotificationHelper {
         payload: 'plain notification');
   }
 
-  // Schedules a notification
   static Future<void> scheduleNotification(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var scheduledNotificationDateTime =
@@ -105,7 +98,6 @@ class NotificationHelper {
     );
   }
 
-  // Click handling on notification
   static void configureSelectNotificationSubject(
       BuildContext context, String route) {
     selectNotificationSubject.stream.listen((String payload) async {
@@ -114,17 +106,6 @@ class NotificationHelper {
     });
   }
 
-  // Handling notifications whilst the app is in the foreground
-  // By design, iOS applications do not display notifications the app is in the
-  // foreground.
-  //
-  // For iOS 10+, use the presentation options to control the behaviour for when
-  // a notification is triggered while the app is in the foreground.
-  //
-  // For older versions of iOS, you need to handle the callback as part of specifying
-  // the method that should be fired to the onDidReceiveLocalNotification argument
-  // when creating an instance IOSInitializationSettings object that is passed to
-  // the function for initializing the plugin.
   static void configureDidReceiveLocalNotificationSubject(
       BuildContext context, String route) {
     didReceiveLocalNotificationSubject.stream
