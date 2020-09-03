@@ -35,9 +35,9 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Padding(
           padding: EdgeInsets.all(8.0),
-          child: Center(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 RaisedButton(
                   child: Text('Show plain notification with payload'),
@@ -46,11 +46,94 @@ class _HomePageState extends State<HomePage> {
                         flutterLocalNotificationsPlugin);
                   },
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 10),
+                RaisedButton(
+                  child: Text(
+                      'Show plain notification that has no body with payload'),
+                  onPressed: () async {
+                    await NotificationHelper.showNotificationWithNoBody(
+                        flutterLocalNotificationsPlugin);
+                  },
+                ),
+                SizedBox(height: 10),
                 RaisedButton(
                   child: Text('Show schedule notification with payload'),
                   onPressed: () async {
                     await NotificationHelper.scheduleNotification(
+                        flutterLocalNotificationsPlugin);
+                  },
+                ),
+                SizedBox(height: 10),
+                RaisedButton(
+                  child: Text(
+                      'Show notification that times out after 3 seconds [Android]'),
+                  onPressed: () async {
+                    await NotificationHelper.showTimeoutNotification(
+                        flutterLocalNotificationsPlugin);
+                  },
+                ),
+                SizedBox(height: 10),
+                RaisedButton(
+                  child: Text('Show grouped notifications [Android]'),
+                  onPressed: () async {
+                    await NotificationHelper.showGroupedNotifications(
+                        flutterLocalNotificationsPlugin);
+                  },
+                ),
+                SizedBox(height: 10),
+                RaisedButton(
+                  child: Text(
+                      'Show progress notification - updates every second [Android]'),
+                  onPressed: () async {
+                    await NotificationHelper.showProgressNotification(
+                        flutterLocalNotificationsPlugin);
+                  },
+                ),
+                SizedBox(height: 10),
+                RaisedButton(
+                  child: Text('Show big picture notification [Android]'),
+                  onPressed: () async {
+                    await NotificationHelper.showBigPictureNotification(
+                        flutterLocalNotificationsPlugin);
+                  },
+                ),
+                SizedBox(height: 10),
+                RaisedButton(
+                  child: Text('Show notification with attachment [iOS]'),
+                  onPressed: () async {
+                    await NotificationHelper.showNotificationWithAttachment(
+                        flutterLocalNotificationsPlugin);
+                  },
+                ),
+                SizedBox(height: 10),
+                RaisedButton(
+                  child: Text('Show inbox notification [Android]'),
+                  onPressed: () async {
+                    await NotificationHelper.showInboxNotification(
+                        flutterLocalNotificationsPlugin);
+                  },
+                ),
+                SizedBox(height: 10),
+                RaisedButton(
+                  child: Text('Delete notification channel [Android]'),
+                  onPressed: () async {
+                    await NotificationHelper.deleteNotificationChannel(
+                        flutterLocalNotificationsPlugin, context);
+                  },
+                ),
+                SizedBox(height: 10),
+                RaisedButton(
+                  child: Text('Cancel notification'),
+                  onPressed: () async {
+                    await NotificationHelper.cancelNotification(
+                        flutterLocalNotificationsPlugin);
+                  },
+                ),
+                SizedBox(height: 10),
+                RaisedButton(
+                  child: Text('Cancel all notification'),
+                  onPressed: () async {
+                    await NotificationHelper.cancelAllNotifications(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
