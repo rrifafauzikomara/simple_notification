@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_notification/ui/detail_page.dart';
 import 'package:simple_notification/main.dart';
 import 'package:simple_notification/utils/notification_helper.dart';
+import 'package:simple_notification/widget/custom_button.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -140,25 +141,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class CustomButton extends StatelessWidget {
-  final String text;
-  final Function onPressed;
-
-  const CustomButton({Key key, this.text, this.onPressed}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ButtonTheme(
-      buttonColor: Colors.grey[300],
-      minWidth: double.infinity,
-      child: RaisedButton(
-        child: Text(text),
-        onPressed: onPressed,
       ),
     );
   }
