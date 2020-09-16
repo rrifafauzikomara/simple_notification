@@ -39,99 +39,98 @@ class _HomePageState extends State<HomePage> {
             scrollDirection: Axis.vertical,
             child: Column(
               children: <Widget>[
-                RaisedButton(
-                  child: Text('Show plain notification with payload'),
+                CustomButton(
+                  text: 'Show plain notification with payload',
                   onPressed: () async {
                     await NotificationHelper.showNotification(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text(
-                      'Show plain notification that has no body with payload'),
+                CustomButton(
+                  text: 'Show plain notification that has no body with payload',
                   onPressed: () async {
                     await NotificationHelper.showNotificationWithNoBody(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text('Show schedule notification with payload'),
+                CustomButton(
+                  text: 'Show schedule notification with payload',
                   onPressed: () async {
                     await NotificationHelper.scheduleNotification(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text(
-                      'Show notification that times out after 3 seconds [Android]'),
+                CustomButton(
+                  text:
+                      'Show notification that times out after 3 seconds [Android]',
                   onPressed: () async {
                     await NotificationHelper.showTimeoutNotification(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text('Show grouped notifications [Android]'),
+                CustomButton(
+                  text: 'Show grouped notifications [Android]',
                   onPressed: () async {
                     await NotificationHelper.showGroupedNotifications(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text(
-                      'Show progress notification - updates every second [Android]'),
+                CustomButton(
+                  text:
+                      'Show progress notification - updates every second [Android]',
                   onPressed: () async {
                     await NotificationHelper.showProgressNotification(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text('Show big picture notification [Android]'),
+                CustomButton(
+                  text: 'Show big picture notification [Android]',
                   onPressed: () async {
                     await NotificationHelper.showBigPictureNotification(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text('Show notification with attachment [iOS]'),
+                CustomButton(
+                  text: 'Show notification with attachment [iOS]',
                   onPressed: () async {
                     await NotificationHelper.showNotificationWithAttachment(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text('Show inbox notification [Android]'),
+                CustomButton(
+                  text: 'Show inbox notification [Android]',
                   onPressed: () async {
                     await NotificationHelper.showInboxNotification(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text('Delete notification channel [Android]'),
+                CustomButton(
+                  text: 'Delete notification channel [Android]',
                   onPressed: () async {
                     await NotificationHelper.deleteNotificationChannel(
                         flutterLocalNotificationsPlugin, context);
                   },
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text('Cancel notification'),
+                CustomButton(
+                  text: 'Cancel notification',
                   onPressed: () async {
                     await NotificationHelper.cancelNotification(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
-                RaisedButton(
-                  child: Text('Cancel all notification'),
+                CustomButton(
+                  text: 'Cancel all notification',
                   onPressed: () async {
                     await NotificationHelper.cancelAllNotifications(
                         flutterLocalNotificationsPlugin);
@@ -141,6 +140,25 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final String text;
+  final Function onPressed;
+
+  const CustomButton({Key key, this.text, this.onPressed}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ButtonTheme(
+      buttonColor: Colors.grey[300],
+      minWidth: double.infinity,
+      child: RaisedButton(
+        child: Text(text),
+        onPressed: onPressed,
       ),
     );
   }
