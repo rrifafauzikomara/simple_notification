@@ -17,9 +17,8 @@ class NotificationHelper {
 
   NotificationHelper._createObject();
 
-  factory NotificationHelper() {
-    return notificationHelper = NotificationHelper._createObject();
-  }
+  factory NotificationHelper() =>
+      notificationHelper = NotificationHelper._createObject();
 
   Future<void> initNotifications(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
