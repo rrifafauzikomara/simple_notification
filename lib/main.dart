@@ -6,12 +6,13 @@ import 'package:simple_notification/utils/notification_helper.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+final NotificationHelper notificationHelper = NotificationHelper();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await NotificationHelper.initNotifications(flutterLocalNotificationsPlugin);
-  NotificationHelper.requestIOSPermissions(flutterLocalNotificationsPlugin);
+  await notificationHelper.initNotifications(flutterLocalNotificationsPlugin);
+  notificationHelper.requestIOSPermissions(flutterLocalNotificationsPlugin);
 
   runApp(
     MaterialApp(

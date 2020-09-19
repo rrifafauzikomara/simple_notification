@@ -13,7 +13,15 @@ final didReceiveLocalNotificationSubject =
     BehaviorSubject<ReceivedNotification>();
 
 class NotificationHelper {
-  static Future<void> initNotifications(
+  static NotificationHelper notificationHelper;
+
+  NotificationHelper._createObject();
+
+  factory NotificationHelper() {
+    return notificationHelper = NotificationHelper._createObject();
+  }
+
+  Future<void> initNotifications(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
@@ -40,7 +48,7 @@ class NotificationHelper {
     });
   }
 
-  static void requestIOSPermissions(
+  void requestIOSPermissions(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) {
     flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
@@ -52,7 +60,7 @@ class NotificationHelper {
         );
   }
 
-  static Future<void> showNotification(
+  Future<void> showNotification(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'your channel id 1',
@@ -71,7 +79,7 @@ class NotificationHelper {
         payload: 'plain notification');
   }
 
-  static Future<void> showNotificationWithNoBody(
+  Future<void> showNotificationWithNoBody(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'your channel id 2',
@@ -88,7 +96,7 @@ class NotificationHelper {
         payload: 'item x');
   }
 
-  static Future<void> scheduleNotification(
+  Future<void> scheduleNotification(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var scheduledNotificationDateTime =
         DateTime.now().add(Duration(seconds: 5));
@@ -125,7 +133,7 @@ class NotificationHelper {
     );
   }
 
-  static Future<void> showTimeoutNotification(
+  Future<void> showTimeoutNotification(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'your channel id 4',
@@ -141,7 +149,7 @@ class NotificationHelper {
         'Times out after 3 seconds', platformChannelSpecifics);
   }
 
-  static Future<void> showGroupedNotifications(
+  Future<void> showGroupedNotifications(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var groupKey = 'com.android.example.WORK_EMAIL';
     var groupChannelId = 'your channel id 5';
@@ -186,7 +194,7 @@ class NotificationHelper {
         3, 'Attention', 'Two messages', platformChannelSpecifics);
   }
 
-  static Future<void> showProgressNotification(
+  Future<void> showProgressNotification(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var maxProgress = 5;
     for (var i = 0; i <= maxProgress; i++) {
@@ -215,8 +223,7 @@ class NotificationHelper {
     }
   }
 
-  static Future<String> _downloadAndSaveFile(
-      String url, String fileName) async {
+  Future<String> _downloadAndSaveFile(String url, String fileName) async {
     var directory = await getApplicationDocumentsDirectory();
     var filePath = '${directory.path}/$fileName';
     var response = await http.get(url);
@@ -225,7 +232,7 @@ class NotificationHelper {
     return filePath;
   }
 
-  static Future<void> showBigPictureNotification(
+  Future<void> showBigPictureNotification(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var largeIconPath = await _downloadAndSaveFile(
         'http://via.placeholder.com/48x48', 'largeIcon');
@@ -249,7 +256,7 @@ class NotificationHelper {
         0, 'big text title', 'silent body', platformChannelSpecifics);
   }
 
-  static Future<void> showNotificationWithAttachment(
+  Future<void> showNotificationWithAttachment(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var bigPicturePath = await _downloadAndSaveFile(
         'http://via.placeholder.com/600x200', 'bigPicture.jpg');
@@ -273,7 +280,7 @@ class NotificationHelper {
         notificationDetails);
   }
 
-  static Future<void> showInboxNotification(
+  Future<void> showInboxNotification(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var lines = List<String>();
     lines.add('line <b>1</b>');
@@ -295,7 +302,7 @@ class NotificationHelper {
         0, 'inbox title', 'inbox body', platformChannelSpecifics);
   }
 
-  static Future<void> deleteNotificationChannel(
+  Future<void> deleteNotificationChannel(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
       BuildContext context) async {
     const channelId = 'your channel id 1';
@@ -322,25 +329,24 @@ class NotificationHelper {
     );
   }
 
-  static Future<void> cancelNotification(
+  Future<void> cancelNotification(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     await flutterLocalNotificationsPlugin.cancel(0);
   }
 
-  static Future<void> cancelAllNotifications(
+  Future<void> cancelAllNotifications(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     await flutterLocalNotificationsPlugin.cancelAll();
   }
 
-  static void configureSelectNotificationSubject(
-      BuildContext context, String route) {
+  void configureSelectNotificationSubject(BuildContext context, String route) {
     selectNotificationSubject.stream.listen((String payload) async {
       await Navigator.pushNamed(context, route,
           arguments: ReceivedNotification(payload: payload));
     });
   }
 
-  static void configureDidReceiveLocalNotificationSubject(
+  void configureDidReceiveLocalNotificationSubject(
       BuildContext context, String route) {
     didReceiveLocalNotificationSubject.stream
         .listen((ReceivedNotification receivedNotification) async {

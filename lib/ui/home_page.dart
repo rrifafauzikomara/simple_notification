@@ -14,9 +14,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    NotificationHelper.configureSelectNotificationSubject(
+    notificationHelper.configureSelectNotificationSubject(
         context, DetailPage.routeName);
-    NotificationHelper.configureDidReceiveLocalNotificationSubject(
+    notificationHelper.configureDidReceiveLocalNotificationSubject(
         context, DetailPage.routeName);
   }
 
@@ -43,15 +43,15 @@ class _HomePageState extends State<HomePage> {
                 CustomButton(
                   text: 'Show plain notification with payload',
                   onPressed: () async {
-                    await NotificationHelper.showNotification(
-                        flutterLocalNotificationsPlugin);
+                    await notificationHelper
+                        .showNotification(flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
                 CustomButton(
                   text: 'Show plain notification that has no body with payload',
                   onPressed: () async {
-                    await NotificationHelper.showNotificationWithNoBody(
+                    await notificationHelper.showNotificationWithNoBody(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
@@ -59,8 +59,8 @@ class _HomePageState extends State<HomePage> {
                 CustomButton(
                   text: 'Show schedule notification with payload',
                   onPressed: () async {
-                    await NotificationHelper.scheduleNotification(
-                        flutterLocalNotificationsPlugin);
+                    await notificationHelper
+                        .scheduleNotification(flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                   text:
                       'Show notification that times out after 3 seconds [Android]',
                   onPressed: () async {
-                    await NotificationHelper.showTimeoutNotification(
+                    await notificationHelper.showTimeoutNotification(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                 CustomButton(
                   text: 'Show grouped notifications [Android]',
                   onPressed: () async {
-                    await NotificationHelper.showGroupedNotifications(
+                    await notificationHelper.showGroupedNotifications(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                   text:
                       'Show progress notification - updates every second [Android]',
                   onPressed: () async {
-                    await NotificationHelper.showProgressNotification(
+                    await notificationHelper.showProgressNotification(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                 CustomButton(
                   text: 'Show big picture notification [Android]',
                   onPressed: () async {
-                    await NotificationHelper.showBigPictureNotification(
+                    await notificationHelper.showBigPictureNotification(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                 CustomButton(
                   text: 'Show notification with attachment [iOS]',
                   onPressed: () async {
-                    await NotificationHelper.showNotificationWithAttachment(
+                    await notificationHelper.showNotificationWithAttachment(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
@@ -109,15 +109,15 @@ class _HomePageState extends State<HomePage> {
                 CustomButton(
                   text: 'Show inbox notification [Android]',
                   onPressed: () async {
-                    await NotificationHelper.showInboxNotification(
-                        flutterLocalNotificationsPlugin);
+                    await notificationHelper
+                        .showInboxNotification(flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
                 CustomButton(
                   text: 'Delete notification channel [Android]',
                   onPressed: () async {
-                    await NotificationHelper.deleteNotificationChannel(
+                    await notificationHelper.deleteNotificationChannel(
                         flutterLocalNotificationsPlugin, context);
                   },
                 ),
@@ -125,15 +125,15 @@ class _HomePageState extends State<HomePage> {
                 CustomButton(
                   text: 'Cancel notification',
                   onPressed: () async {
-                    await NotificationHelper.cancelNotification(
-                        flutterLocalNotificationsPlugin);
+                    await notificationHelper
+                        .cancelNotification(flutterLocalNotificationsPlugin);
                   },
                 ),
                 SizedBox(height: 10),
                 CustomButton(
                   text: 'Cancel all notification',
                   onPressed: () async {
-                    await NotificationHelper.cancelAllNotifications(
+                    await notificationHelper.cancelAllNotifications(
                         flutterLocalNotificationsPlugin);
                   },
                 ),
